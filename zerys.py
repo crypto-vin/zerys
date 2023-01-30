@@ -88,10 +88,13 @@ class Zerys:
                     msg = f'{total_tasks} tasks have been posted in the New Clients Job tab. Check them out!'
                 with f:
                     f.write(f'\n{msg}')
+
+                tasks_available.click()
                 if msg not in self.prev_msg_list:
                     self.send_sms(msg)
                     self.prev_msg_list.append(msg)
                     self.task_found = True
+                    self.open_task()
             else:
                 if a % 50 == 2:
                     print(f'\n\n--- Fetched data at {self.now} ---')
@@ -123,16 +126,29 @@ class Zerys:
                 with f:
                     f.write(f'\n{msg}')
                 #print(msg)
+                fav_tab.click()
                 if msg not in self.prev_msg_list:
                     self.send_sms(msg)
                     self.prev_msg_list.append(msg)
                     self.task_found = True
+                    self.open_task()
             else:
                 if a % 50 == 2:
                     msg = f'    No tasks in My Client Assignments'
                     print(msg)
                     with f:
                         f.write(f'\n{msg}')
+    
+    # open the task found
+    def open_task(self):
+        try:
+            open_button = WebDriverWait(self.new_task, 60).until(
+                    EC.presence_of_element_located((By.XPATH, ".//td[@class='jc_table_row_open']"))
+                )
+        except:
+            print('    Could not open task')
+        else:
+            open_button.click()
     
     # send text notification once a task is spotted
     def send_sms(self, message):
@@ -157,8 +173,8 @@ class Zerys:
             self.check_new_clients(a)
             self.check_client_assignments(a)
             time.sleep(loop_duration)
-            if self.task_found:
-                break
+            #if self.task_found:
+            #    break
             try:
                 self.driver.refresh()
                 a += 1
@@ -187,5 +203,6 @@ class Zerys:
         self.get_job(self.loop_duration)
 
 if __name__ == "__main__":
-    zerys = Zerys(email='topfreelancer87@yahoo.com', password='@Martin1111', loop_duration=5, phone='+254712897106')
+    #zerys = Zerys(email='topfreelancer87@yahoo.com', password='@Martin1111', loop_duration=5, phone='+254712897106')
+    zerys = Zerys(email='nabilabdi05@gmail.com', password='@Martin1111', loop_duration=5, phone='+254712897106')
     zerys.run()

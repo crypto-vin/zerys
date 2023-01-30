@@ -13,12 +13,12 @@ class Server:
         self.ADDR = (self.SERVER, self.PORT)
         self.FORMAT = 'utf-8'
         self.DISCONNECT_MESSAGE = '!DISCONNECT'
-        self.user_list = ['Admin', 'Martin']
-        self.passwords = ['Vin2am@254', '@Martin1111']
+        self.user_list = ['Admin', 'Marto01']
+        self.passwords = ['Vin2am@254', '01Marto']
         self.phones = ['+254712897106 +254713136333', 
                        '+254712618137']
 
-        self.allowed_accs = ['topfreelancer87@yahoo.com vinmunyalo14@gmail.com',
+        self.allowed_accs = ['topfreelancer87@yahoo.com nabilabdi05@gmail.com',
                              'topfreelancer87@yahoo.com']
 
         f = open("data.csv", 'w', newline='')
@@ -30,7 +30,7 @@ class Server:
 
         self.server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         self.server.bind(self.ADDR)
-    
+           
     def strip_msg(self, msg):
         half = msg.find(' ')
         username = (msg[: half ])
@@ -54,9 +54,9 @@ class Server:
                 if msg == self.DISCONNECT_MESSAGE:
                     connected = False
                     sys.exit()
-                    
+
                 print(f"[{addr}] {msg}")
-            
+
                 self.strip_msg(msg)
 
             try:
@@ -71,11 +71,9 @@ class Server:
                     print(f'{self.username} exists')
                     if self.password == self.passwords[ind]:
                         conn.send(f'exists, {self.allowed_accs[ind]}- {self.phones[ind]}> {self.username}'.encode(self.FORMAT))
-                        return 'exists'
                         break             
                     else:
                         conn.send('incorrect_pwd'.encode(self.FORMAT))
-                        return 'incorrect_pwd'
                         break
                 else:
                     print(f'{self.username} does not exist')
@@ -85,7 +83,7 @@ class Server:
             except Exception as err:
                 print(err)
                 break
-                
+
         conn.close()
 
     def start(self):
@@ -100,6 +98,7 @@ class Server:
     def run(self):
         print('[STARTING] server is starting... ')
         self.start()
+
 
 if __name__ == "__main__":
     app = Server()

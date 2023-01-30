@@ -190,7 +190,7 @@ class Ui_Form(object):
         self.lineEdit_2.setPlaceholderText(_translate("Form", "  Password"))
         self.pushButton.setText(_translate("Form", "L o g  I n"))
         self.pushButton.setShortcut(_translate("Form", "Return"))
-        self.label_5.setText(_translate("Form", "Forgot your User Name or Password? "))
+        #self.label_5.setText(_translate("Form", "Forgot your User Name or Password? "))
         
 
     def go_home(self):
